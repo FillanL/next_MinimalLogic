@@ -11,7 +11,7 @@ const Nav = (): React.ReactElement => {
           <Link href="/">home</Link>
         </NavItem>
         <NavItem>
-          <Link href="/">fam</Link>
+          <Link href="/explore">Explore</Link>
         </NavItem>
       </NavItemList>
       <LoginSection>

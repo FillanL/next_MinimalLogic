@@ -7,6 +7,10 @@ import Date from "../components/date";
 import { GetStaticProps } from "next";
 import Seo from "../components/Seo";
 import React from "react";
+import FeaturedPost from "../components/featuredPost";
+import styled from "styled-components";
+
+import { BlogPost } from "../interfaces";
 
 export default function Home({
   allPostsData,
@@ -17,6 +21,16 @@ export default function Home({
     id: string;
   }[];
 }): React.ReactElement {
+  const dummyffeat: BlogPost = {
+    title: "sfsdf",
+    imgUrl:
+      "https://images.unsplash.com/photo-1527239441953-caffd968d952?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
+    content: "csome content",
+    description: "some descpt",
+    keywords: "dsfsd",
+    id: "safa",
+    author: "admin",
+  };
   return (
     <>
       <section>
@@ -25,11 +39,16 @@ export default function Home({
           content="testing out next"
           description="this is the descriptions"
         />
-        <p>[Your Self Introduction]</p>
-        <p>
-          (This is a sample website - you’ll be building a site like this in{" "}
-          <a href="https://nextjs.org/learn">our Next.js tutorial</a>.)
-        </p>
+        <GrindLayout>
+          <FeaturedPost {...dummyffeat} />
+          <Blockk />
+        </GrindLayout>
+
+        <GrindSecondLayout>
+          <Block />
+          <Block />
+          <Block />
+        </GrindSecondLayout>
       </section>
 
       <section>
@@ -60,3 +79,29 @@ export const getStaticProps: GetStaticProps = async () => {
     },
   };
 };
+const GrindLayout = styled.div`
+  width: 97%;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 60% 40%;
+`;
+const GrindSecondLayout = styled.div`
+  padding: 30px 0;
+  height: 400px;
+  width: 90%;
+  margin: auto;
+  display: grid;
+  grid-template-columns: repeat(3, 33.33%);
+  justify-items: center;
+`;
+const Blockk = styled.div`
+  padding: 10px;
+  width: 90%;
+  margin: 0 auto;
+  background-color: blue;
+`;
+const Block = styled.div`
+  padding: 10px;
+  width: 80%;
+  background-color: blue;
+`;
