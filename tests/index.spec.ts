@@ -5,4 +5,8 @@ describe("first init test", () => {
     const testRan = true;
     expect(testRan).toBe(true);
   });
+  test("should return a slug", () => {
+    const testRan = true;
+    expect(testRan).toBe(true);
+  });
 });
