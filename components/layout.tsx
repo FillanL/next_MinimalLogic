@@ -13,7 +13,7 @@ export const siteTitle = "Next.js Sample Website";
 export default function Layout({
   children,
 }: {
-  children: React.ReactNode;
+  children: React.ReactChild|React.ReactElement;
 }): React.ReactElement {
   return (
     <LayoutContainer>
@@ -31,7 +31,7 @@ const LayoutContainer = styled.div`
   min-height: 100vh;
   padding: 10px 20px;
 `;
-const ChildComponentWrapper = styled.div`
+const ChildComponentWrapper = styled.main`
   min-height: 100vh;
   padding: 10px 25px;
 `;

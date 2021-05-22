@@ -4,7 +4,7 @@ const Nav = (): React.ReactElement => {
   return (
     <NavBar>
       <LogoContainer>
-        <Link href="/">Minimal Logic</Link>
+        <Link href="/">Minimal Syntax</Link>
       </LogoContainer>
       <NavItemList>
         <NavItem>
@@ -14,9 +14,6 @@ const Nav = (): React.ReactElement => {
           <Link href="/explore">Explore</Link>
         </NavItem>
       </NavItemList>
-      <LoginSection>
-        <p>sign in</p>
-      </LoginSection>
     </NavBar>
   );
 };
@@ -36,19 +33,16 @@ const NavItemList = styled.ul`
 const NavItem = styled.li`
   display: inline;
   a {
-    background-color: #353637;
-    color: #fff;
+    color: #000000;
     padding: 1rem;
     text-decoration: none;
+    text-transform: capitalize;
   }
 `;
 const LogoContainer = styled.span`
   a {
     font-size: 30px;
-    color: #fff;
+    color: #000000;
     text-decoration: none;
   }
-`;
-const LoginSection = styled.div`
-  text-align: right;
 `;
