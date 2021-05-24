@@ -25,6 +25,10 @@ export default function Layout({
 }
 
 const LayoutContainer = styled.div`
+  *{
+    margin:0;
+    padding:0;
+  }
   box-sizing: border-box;
   width: 100%;
   max-width: 100vw;
