@@ -4,85 +4,105 @@ import Seo from "../../components/Seo";
 import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
 import BlogPost from "../../interfaces";
-const Article = ({ nm }) => {
+export const getStaticPaths: GetStaticPaths = async () => {
+  const s = await fetch("http://localhost:3004/articles");
+  const allBlogPost = await s.json();
+  const paths = allBlogPost.map((article) => {
+    return {
+      params: {
+        slug: article.articleTitle
+          ? articleSlug(article.articleTitle)
+          : "admin-admin",
+      },
+    };
+  });
+  return {
+    paths,
+    fallback: false,
+  };
+};
+export const getStaticProps: GetStaticProps = async (context) => {
+  const s = await fetch(`http://localhost:3004/articles`);
+  const allBlogPost = await s.json();
+  const blogPost = allBlogPost.filter(
+    (post) =>
+      post.articleTitle === articleUnSlug(context.params.slug.toString())
+  )[0];
+  return {
+    props: {
+      blogPost,
+    },
+  };
+};
+
+const Article = ({ blogPost }) => {
   const router = useRouter();
   const { slug } = router.query;
-
-  console.log(typeof slug, slug);
-  if (slug) console.log("string", nm);
-  // const articleTile = articleUnSlug(slug.toString())
-  // const readTime =  readMinutes(article)
+  // console.log(blogPost , nm)
+  // const blogPost = nm.filter(post=> post.articleTitle === articleUnSlug(slug.toString()))[0]
   return (
     <>
       <Seo
-        title={nm.title}
-        description={nm.title}
-        content={`content regards to this  post`}
+        title={blogPost.articleTitle ? blogPost.articleTitle : "undef"}
+        description={blogPost.articleDescription}
+        content={`content regards to this post`}
       />
-      <div>{slug} slug</div>
-      <div>{nm.title} title</div>
-      {/* <Seo
-        content={"content"}
-        description={"postData"}
-        title={postData.title}
-      />
-      <Head>
-        <title>{postData.title}</title>
-      </Head>
-      <article>
-        <h1>{postData.title}</h1>
-        <div>
-          <Date dateString={postData.date} />
-        </div>
-        <div dangerouslySetInnerHTML={{ __html: postData.contentHtml }} />
-      </article> */}
+      <PostTitle>
+        {blogPost.articleTitle ? blogPost.articleTitle : "undef"} title
+      </PostTitle>
+      <PostDetails>
+        date &nbsp; ~ &nbsp;
+        {readMinutes(blogPost.articleContent ? blogPost.articleContent : "") +
+          " mins read"}
+      </PostDetails>
+      <ImageContainer>
+        <FeatImage
+          src="https://images.unsplash.com/photo-1621634466709-d9680f672d3d?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1"
+          alt={blogPost.articleTitle}
+        />
+      </ImageContainer>
+      <ContentContainer>
+        <article
+          dangerouslySetInnerHTML={{ __html: blogPost.articleContent }}
+        />
+      </ContentContainer>
     </>
   );
 };
 
 export default Article;
 
-export const getStaticPaths: GetStaticPaths = async () => {
-  // ...
-  const dummyffeat: BlogPost[] = [
-    {
-      title: "sfsdf",
-      imgUrl:
-        "https://images.unsplash.com/photo-1527239441953-caffd968d952?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-      content: "csome content",
-      description: "some descpt",
-      keywords: "dsfsd",
-      id: "safa",
-      author: "admin",
-    },
-  ];
-  const paths = dummyffeat.map((article) => {
-    return {
-      params: { slug: articleSlug(article.title) },
-    };
-  });
-  // console.log("paths", path)
-  return {
-    paths,
-    fallback: false,
-  };
-};
-export const getStaticProps: GetStaticProps = async () => {
-  // const allPostsData = getSortedPostsData();
-  const dummyffeat: BlogPost = {
-    title: "sfsdf",
-    imgUrl:
-      "https://images.unsplash.com/photo-1527239441953-caffd968d952?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-    content: "csome content",
-    description: "some descpt",
-    keywords: "dsfsd",
-    id: "safa",
-    author: "admin",
-  };
-
-  return {
-    props: {
-      nm: dummyffeat,
-    },
-  };
-};
+const ContentInfo = styled.div`
+  width: 100%;
+  text-align: center;
+`;
+const ImageContainer = styled.div`
+  width: 70vw;
+  height: 60vh;
+  margin: 0 auto 30px;
+`;
+const PostTitle = styled.h1`
+  text-transform: capitalize;
+  color: #2e2e2e;
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  margin: 20px 0px 0px;
+`;
+const FeatImage = styled.img`
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+`;
+const ContentContainer = styled.div`
+  padding: 5px 30px;
+  margin-bottom: 20px;
+`;
+const PostDetails = styled.p`
+  font-family: Helvetica, sans-serif;
+  font-size: 11px;
+  letter-spacing: 1.5px;
+  text-align: center;
+  padding: 0px 10px;
+  color: #5f5f5f;
+  margin-bottom: 15px;
+`;
