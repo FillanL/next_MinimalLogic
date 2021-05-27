@@ -1,4 +1,4 @@
-export interface BlogPost {
+export default interface BlogPost {
   id: string;
   title: string;
   description: string;
@@ -6,4 +6,5 @@ export interface BlogPost {
   imgUrl: string;
   content: string;
   author: string;
+  readTime: string;
 }

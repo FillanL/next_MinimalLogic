@@ -1,107 +1,87 @@
-import Head from "next/head";
-import Layout, { siteTitle } from "../components/layout";
-import utilStyles from "../styles/utils.module.css";
-import { getSortedPostsData } from "../lib/posts";
-import Link from "next/link";
-import Date from "../components/date";
-import { GetStaticProps } from "next";
+import { GetStaticProps, GetStaticPaths } from "next";
 import Seo from "../components/Seo";
-import React from "react";
 import FeaturedPost from "../components/featuredPost";
 import styled from "styled-components";
+import BlogPost from "../interfaces";
+import SliderCard from "../components/sliderCard";
+import Image from "next/image";
 
-import { BlogPost } from "../interfaces";
-
-export default function Home({
-  allPostsData,
-}: {
-  allPostsData: {
-    date: string;
-    title: string;
-    id: string;
-  }[];
-}): React.ReactElement {
-  const dummyffeat: BlogPost = {
-    title: "sfsdf",
-    imgUrl:
-      "https://images.unsplash.com/photo-1527239441953-caffd968d952?ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=634&q=80",
-    content: "csome content",
-    description: "some descpt",
-    keywords: "dsfsd",
-    id: "safa",
-    author: "admin",
-  };
+interface HomeImpl {
+  // blogPost: BlogPost;
+  // allBlogPost: any;
+}
+export default function Home({ allBlogPost }): React.ReactElement {
+  // console.log(allBlogPost)
   return (
     <>
-      <section>
-        <Seo
-          title="fill"
-          content="testing out next"
-          description="this is the descriptions"
-        />
-        <GrindLayout>
-          <FeaturedPost {...dummyffeat} />
-          <Blockk />
-        </GrindLayout>
+      <Seo title="fill" content="testing out next" />
+      <GrindLayout>
+        <SliderCard key={allBlogPost[0]._id} blogPost={allBlogPost[0]} />
 
-        <GrindSecondLayout>
-          <Block />
-          <Block />
-          <Block />
-        </GrindSecondLayout>
-      </section>
-
-      <section>
-        <h2>Blog</h2>
-        <ul>
-          {allPostsData.map(({ id, date, title }) => (
-            <li key={id}>
-              <Link href={`/posts/${id}`}>
-                <a>{title}</a>
-              </Link>
-              <br />
-              <small>
-                <Date dateString={date} />
-              </small>
-            </li>
+        <SideFeat>
+          {allBlogPost.slice(0, 3).map((post) => (
+            <FeaturedPost key={post._id} blogPost={post} />
           ))}
-        </ul>
-      </section>
+        </SideFeat>
+      </GrindLayout>
+      <div>small banner</div>
+      <BottomContainer>
+        <RandomArticle>
+          {allBlogPost.slice(3, 8).map((post) => (
+            <FeaturedPost key={post._id} blogPost={post} />
+          ))}
+        </RandomArticle>
+        <div>section</div>
+      </BottomContainer>
     </>
   );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const allPostsData = getSortedPostsData();
+  const s = await fetch("http://localhost:3004/articles");
+  const allBlogPost = await s.json();
+  const srcc = "https://images.unsplash.com/photo-1621634466709-d9680f672d3d";
   return {
     props: {
-      allPostsData,
+      allBlogPost,
+      srcc,
     },
   };
 };
+
 const GrindLayout = styled.div`
-  width: 97%;
+  width: 100%;
+  min-height: 450px;
   margin: 0 auto;
   display: grid;
-  grid-template-columns: 60% 40%;
+  grid-template-columns: 55% 45%;
 `;
-const GrindSecondLayout = styled.div`
-  padding: 30px 0;
-  height: 400px;
-  width: 90%;
-  margin: auto;
+const SideFeat = styled.div`
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
   display: grid;
-  grid-template-columns: repeat(3, 33.33%);
-  justify-items: center;
+  grid-template-columns: 100%;
+  grid-template-rows: repeat(auto-fit, minmax(31%, 33.33%));
+  row-gap: 5px;
+  box-sizing: border-box;
 `;
-const Blockk = styled.div`
-  padding: 10px;
-  width: 90%;
-  margin: 0 auto;
-  background-color: blue;
+const RandomArticle = styled.div`
+  width: 100%;
+  height: 100%;
+  max-height: 100%;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 100%;
+  row-gap: 5px;
+  box-sizing: border-box;
 `;
-const Block = styled.div`
-  padding: 10px;
-  width: 80%;
-  background-color: blue;
+const BottomContainer = styled.div`
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 70% 30%;
+  height: 500px;
+  row-gap: 5px;
+  box-sizing: border-box;
 `;

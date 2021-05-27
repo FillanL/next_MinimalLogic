@@ -33,9 +33,9 @@ const LayoutContainer = styled.div`
   width: 100%;
   max-width: 100vw;
   min-height: 100vh;
-  padding: 10px 20px;
+  /* padding: 10px 20px; */
 `;
 const ChildComponentWrapper = styled.main`
   min-height: 100vh;
-  padding: 10px 25px;
+  /* padding: 10px 25px; */
 `;

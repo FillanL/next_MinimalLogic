@@ -35,7 +35,6 @@ describe("test the functionality of mins read", () => {
   });
   test("return the correct mins to read article rounded", () => {
     const minutes = readMinutes(threeHundredWords);
-    console.log(minutes, "min");
     expect(minutes).toBe(2);
   });
   test("return the correct mins to read article not including syntax tags", () => {

@@ -25,6 +25,7 @@ const NavBar = styled.nav`
   display: grid;
   grid-template-columns: 20% 60% 20%;
   box-sizing: border-box;
+  
 `;
 const NavItemList = styled.ul`
   text-align: center;
@@ -34,7 +35,7 @@ const NavItem = styled.li`
   display: inline;
   a {
     color: #000000;
-    padding: 1rem;
+    padding: 0 1rem;
     text-decoration: none;
     text-transform: capitalize;
   }
