@@ -4,6 +4,7 @@ import Seo from "../../components/Seo";
 import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
 import BlogPost from "../../interfaces";
+
 export const getStaticPaths: GetStaticPaths = async () => {
   const s = await fetch("http://localhost:3004/articles");
   const allBlogPost = await s.json();
