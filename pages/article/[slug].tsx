@@ -7,7 +7,8 @@ import BlogPost from "../../interfaces";
 import axios from "axios";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const query = {query:`query {
+  const query = {
+    query: `query {
     getPosts {
       post {
         _id
@@ -18,9 +19,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
         createdBy
       }
     }
-  }`}
+  }`,
+  };
 
-  const allBlogPost = await axios.post("http://localhost:8000/graphql",query)
+  const allBlogPost = await axios.post("http://localhost:8000/graphql", query);
 
   const paths = await allBlogPost.data.data.getPosts.post.map((article) => {
     return {
@@ -35,7 +37,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 export const getStaticProps: GetStaticProps = async (context) => {
-  const query = {query:`query {
+  const query = {
+    query: `query {
     getPosts {
       post {
         _id
@@ -46,17 +49,17 @@ export const getStaticProps: GetStaticProps = async (context) => {
         createdBy
       }
     }
-  }`}
-  
-  const s = await axios.post("http://localhost:8000/graphql", query)
+  }`,
+  };
+
+  const s = await axios.post("http://localhost:8000/graphql", query);
   const allBlogPost = await s.data.data.getPosts.post;
   const blogPost = allBlogPost.filter(
-    (post) =>
-      post.title === articleUnSlug(context.params.slug.toString())
+    (post) => post.title === articleUnSlug(context.params.slug.toString())
   )[0];
   return {
     props: {
-      blogPost: blogPost ,
+      blogPost: blogPost,
     },
   };
 };
@@ -71,24 +74,23 @@ const Article = ({ blogPost }) => {
         description={blogPost.description}
         content={`content regards to this post`}
       />
-      <PostTitle>
-        {blogPost.title ? blogPost.title : "undef"} title
-      </PostTitle>
+      <PostTitle>{blogPost.title ? blogPost.title : "undef"} title</PostTitle>
       <PostDetails>
         date &nbsp; ~ &nbsp;
-        {readMinutes(blogPost.content ? blogPost.content : "") +
-          " mins read"}
+        {readMinutes(blogPost.content ? blogPost.content : "") + " mins read"}
       </PostDetails>
       <ImageContainer>
         <FeatImage
-          src={blogPost.mainImageUrl ? blogPost.mainImageUrl: "https://images.unsplash.com/photo-1621634466709-d9680f672d3d?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1"}
+          src={
+            blogPost.mainImageUrl
+              ? blogPost.mainImageUrl
+              : "https://images.unsplash.com/photo-1621634466709-d9680f672d3d?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1"
+          }
           alt={blogPost.title}
         />
       </ImageContainer>
       <ContentContainer>
-        <article
-          dangerouslySetInnerHTML={{ __html: blogPost.content }}
-        />
+        <article dangerouslySetInnerHTML={{ __html: blogPost.content }} />
       </ContentContainer>
     </div>
   );
