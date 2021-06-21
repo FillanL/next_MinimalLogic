@@ -5,13 +5,14 @@ import styled from "styled-components";
 import BlogPost from "../interfaces";
 import SliderCard from "../components/sliderCard";
 import Image from "next/image";
+import axios from "axios";
 
 interface HomeImpl {
   // blogPost: BlogPost;
   // allBlogPost: any;
 }
 export default function Home({ allBlogPost }): React.ReactElement {
-  // console.log(allBlogPost)
+  if (!allBlogPost) return <div> loading</div>;
   return (
     <>
       <Seo title="fill" content="testing out next" />
@@ -38,13 +39,27 @@ export default function Home({ allBlogPost }): React.ReactElement {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const s = await fetch("http://localhost:3004/articles");
-  const allBlogPost = await s.json();
-  const srcc = "https://images.unsplash.com/photo-1621634466709-d9680f672d3d";
+  const query = {
+    query: `query {
+    getPosts {
+      post {
+        _id
+        title
+        description
+        content
+        mainImageUrl
+        createdBy
+      }
+    }
+  }`,
+  };
+
+  const s = await axios.post("http://localhost:8000/graphql", query);
+
+  const allBlogPost = await s.data.data.getPosts.post;
   return {
     props: {
       allBlogPost,
-      srcc,
     },
   };
 };

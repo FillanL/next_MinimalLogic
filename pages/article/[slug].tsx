@@ -4,16 +4,28 @@ import Seo from "../../components/Seo";
 import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
 import BlogPost from "../../interfaces";
+import axios from "axios";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const s = await fetch("http://localhost:3004/articles");
-  const allBlogPost = await s.json();
-  const paths = allBlogPost.map((article) => {
+  const query = {query:`query {
+    getPosts {
+      post {
+        _id
+        title
+        description
+        content
+        mainImageUrl
+        createdBy
+      }
+    }
+  }`}
+
+  const allBlogPost = await axios.post("http://localhost:8000/graphql",query)
+
+  const paths = await allBlogPost.data.data.getPosts.post.map((article) => {
     return {
       params: {
-        slug: article.articleTitle
-          ? articleSlug(article.articleTitle)
-          : "admin-admin",
+        slug: articleSlug(article.title),
       },
     };
   });
@@ -23,15 +35,28 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 export const getStaticProps: GetStaticProps = async (context) => {
-  const s = await fetch(`http://localhost:3004/articles`);
-  const allBlogPost = await s.json();
+  const query = {query:`query {
+    getPosts {
+      post {
+        _id
+        title
+        description
+        content
+        mainImageUrl
+        createdBy
+      }
+    }
+  }`}
+  
+  const s = await axios.post("http://localhost:8000/graphql", query)
+  const allBlogPost = await s.data.data.getPosts.post;
   const blogPost = allBlogPost.filter(
     (post) =>
-      post.articleTitle === articleUnSlug(context.params.slug.toString())
+      post.title === articleUnSlug(context.params.slug.toString())
   )[0];
   return {
     props: {
-      blogPost,
+      blogPost: blogPost ,
     },
   };
 };
@@ -39,35 +64,33 @@ export const getStaticProps: GetStaticProps = async (context) => {
 const Article = ({ blogPost }) => {
   const router = useRouter();
   const { slug } = router.query;
-  // console.log(blogPost , nm)
-  // const blogPost = nm.filter(post=> post.articleTitle === articleUnSlug(slug.toString()))[0]
   return (
-    <>
+    <div>
       <Seo
-        title={blogPost.articleTitle ? blogPost.articleTitle : "undef"}
-        description={blogPost.articleDescription}
+        title={blogPost.title ? blogPost.title : "undef"}
+        description={blogPost.description}
         content={`content regards to this post`}
       />
       <PostTitle>
-        {blogPost.articleTitle ? blogPost.articleTitle : "undef"} title
+        {blogPost.title ? blogPost.title : "undef"} title
       </PostTitle>
       <PostDetails>
         date &nbsp; ~ &nbsp;
-        {readMinutes(blogPost.articleContent ? blogPost.articleContent : "") +
+        {readMinutes(blogPost.content ? blogPost.content : "") +
           " mins read"}
       </PostDetails>
       <ImageContainer>
         <FeatImage
-          src="https://images.unsplash.com/photo-1621634466709-d9680f672d3d?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1"
-          alt={blogPost.articleTitle}
+          src={blogPost.mainImageUrl ? blogPost.mainImageUrl: "https://images.unsplash.com/photo-1621634466709-d9680f672d3d?ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHw3fHx8ZW58MHx8fHw%3D&ixlib=rb-1.2.1"}
+          alt={blogPost.title}
         />
       </ImageContainer>
       <ContentContainer>
         <article
-          dangerouslySetInnerHTML={{ __html: blogPost.articleContent }}
+          dangerouslySetInnerHTML={{ __html: blogPost.content }}
         />
       </ContentContainer>
-    </>
+    </div>
   );
 };
 

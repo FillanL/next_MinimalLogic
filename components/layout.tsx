@@ -1,8 +1,6 @@
-import Head from "next/head";
-import Image from "next/image";
-import styles from "./layout.module.css";
-import utilStyles from "../styles/utils.module.css";
-import Link from "next/link";
+
+import "./layout.module.css";
+import "../styles/utils.module.css";
 import Nav from "./Nav";
 import Footer from "./Footer";
 import React, { ReactChild } from "react";
@@ -33,9 +31,7 @@ const LayoutContainer = styled.div`
   width: 100%;
   max-width: 100vw;
   min-height: 100vh;
-  /* padding: 10px 20px; */
 `;
 const ChildComponentWrapper = styled.main`
   min-height: 100vh;
-  /* padding: 10px 25px; */
 `;

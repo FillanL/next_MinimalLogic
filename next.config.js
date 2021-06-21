@@ -15,7 +15,7 @@ module.exports = {
     domains: [
       "res.cloudinary.com",
       "images.unsplash.com",
-      "https://res.cloudinary.com/flee01/image/upload/v1615526222/whichWay_oux3pb.jpg",
+      "https://res.cloudinary.com",
     ],
   },
 };

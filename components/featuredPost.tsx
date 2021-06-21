@@ -9,16 +9,13 @@ interface FeaturedPostImpl {
   blogPost: any;
 }
 const FeaturedPost = ({ blogPost }: FeaturedPostImpl): React.ReactElement => {
-  console.log(blogPost);
+  
   return (
     <FeaturedContainer>
       <ImageContainer>
         <Link
-          aria-label={blogPost.articleTitle}
-          href={`/article/${
-            blogPost.articleTitle
-              ? articleSlug(blogPost.articleTitle)
-              : "admin-admin"
+          aria-label={blogPost.title}
+          href={`/article/${articleSlug(blogPost.title)
           }`}
         >
           <Image
@@ -27,7 +24,7 @@ const FeaturedPost = ({ blogPost }: FeaturedPostImpl): React.ReactElement => {
             height="150"
             layout="responsive"
             // objectFit="cover"
-            alt={blogPost.articleTitle}
+            alt={blogPost.title}
             loading="lazy"
           />
           {/* <FeatImage
@@ -38,39 +35,30 @@ const FeaturedPost = ({ blogPost }: FeaturedPostImpl): React.ReactElement => {
       </ImageContainer>
       <ContentInfo>
         <Link
-          aria-label={blogPost.articleTitle}
-          href={`/article/${
-            blogPost.articleTitle
-              ? articleSlug(blogPost.articleTitle)
-              : "admin-admin"
+          aria-label={blogPost.title}
+          href={`/article/${articleSlug(blogPost.title)
           }`}
         >
-          <PostTitle>{blogPost.articleTitle}</PostTitle>
+          <PostTitle>{blogPost.title}</PostTitle>
         </Link>
         <div>
           <PostDetails>
             date &nbsp; ~ &nbsp;
             {readMinutes(
-              blogPost.articleContent ? blogPost.articleContent : ""
+              blogPost.content ? blogPost.content : ""
             ) + " mins read"}
           </PostDetails>
         </div>
         <Link
-          aria-label={blogPost.articleTitle}
-          href={`/article/${
-            blogPost.articleTitle
-              ? articleSlug(blogPost.articleTitle)
-              : "admin-admin"
+          aria-label={blogPost.title}
+          href={`/article/${articleSlug(blogPost.title)
           }`}
         >
-          <PostDescript>{blogPost.articleDescription}</PostDescript>
+          <PostDescript>{blogPost.description}</PostDescript>
         </Link>
         <Link
-          aria-label={blogPost.articleTitle}
-          href={`/article/${
-            blogPost.articleTitle
-              ? articleSlug(blogPost.articleTitle)
-              : "admin-admin"
+          aria-label={blogPost.title}
+          href={`/article/${articleSlug(blogPost.title)
           }
           `}
         >
@@ -104,11 +92,7 @@ const ContentInfo = styled.div`
 const ImageContainer = styled.div`
   width: 100%;
   height: 100%;
-  /* img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  } */
+
 `;
 const PostTitle = styled.h1`
   font-size: 22px;
