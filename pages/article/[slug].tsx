@@ -4,59 +4,31 @@ import Seo from "../../components/Seo";
 import { useRouter } from "next/router";
 import { GetStaticPaths, GetStaticProps } from "next";
 import BlogPost from "../../interfaces";
-import axios from "axios";
+import Post from "services/post";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const query = {
-    query: `query {
-    getPosts {
-      post {
-        _id
-        title
-        description
-        content
-        mainImageUrl
-        createdBy
-      }
-    }
-  }`,
-  };
 
-  const allBlogPost = await axios.post("http://localhost:8000/graphql", query);
-
-  const paths = await allBlogPost.data.data.getPosts.post.map((article) => {
+  const allBlogPost = await Post.getPost()
+  const paths = await allBlogPost.map((article) => {
     return {
       params: {
         slug: articleSlug(article.title),
       },
     };
   });
+
   return {
     paths,
     fallback: false,
   };
 };
 export const getStaticProps: GetStaticProps = async (context) => {
-  const query = {
-    query: `query {
-    getPosts {
-      post {
-        _id
-        title
-        description
-        content
-        mainImageUrl
-        createdBy
-      }
-    }
-  }`,
-  };
-
-  const s = await axios.post("http://localhost:8000/graphql", query);
-  const allBlogPost = await s.data.data.getPosts.post;
+ 
+  const allBlogPost = await Post.getPost()
   const blogPost = allBlogPost.filter(
     (post) => post.title === articleUnSlug(context.params.slug.toString())
   )[0];
+
   return {
     props: {
       blogPost: blogPost,

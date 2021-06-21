@@ -5,7 +5,7 @@ import styled from "styled-components";
 import BlogPost from "../interfaces";
 import SliderCard from "../components/sliderCard";
 import Image from "next/image";
-import axios from "axios";
+import Post from "services/post";
 
 interface HomeImpl {
   // blogPost: BlogPost;
@@ -39,24 +39,8 @@ export default function Home({ allBlogPost }): React.ReactElement {
 }
 
 export const getStaticProps: GetStaticProps = async () => {
-  const query = {
-    query: `query {
-    getPosts {
-      post {
-        _id
-        title
-        description
-        content
-        mainImageUrl
-        createdBy
-      }
-    }
-  }`,
-  };
+  const allBlogPost = await Post.getPost();
 
-  const s = await axios.post("http://localhost:8000/graphql", query);
-
-  const allBlogPost = await s.data.data.getPosts.post;
   return {
     props: {
       allBlogPost,
