@@ -7,39 +7,28 @@ import Link from "next/link";
 
 interface FeaturedPostImpl {
   blogPost: any;
+  styleType?: string;
 }
-const FeaturedPost = ({ blogPost }: FeaturedPostImpl): React.ReactElement => {
+const FeaturedPost = ({ blogPost, styleType }: FeaturedPostImpl): React.ReactElement => {
   
   return (
-    <FeaturedContainer>
-      <ImageContainer>
-        <Link
-          aria-label={blogPost.title}
-          href={`/article/${articleSlug(blogPost.title)
-          }`}
-        >
+    <FeaturedContainer styleType={styleType}>
+      <ImageContainer styleType={styleType}>
           <Image
             src="https://images.unsplash.com/photo-1621634466709-d9680f672d3d"
-            width="150"
-            height="150"
-            layout="responsive"
-            // objectFit="cover"
+            layout="fill"
+            objectFit="cover"
             alt={blogPost.title}
             loading="lazy"
           />
-          {/* <FeatImage
-            src="https://images.unsplash.com/photo-1621634466709-d9680f672d3d"
-            alt={blogPost.articleTitle}
-          /> */}
-        </Link>
       </ImageContainer>
-      <ContentInfo>
+      <ContentInfo styleType={styleType}>
         <Link
           aria-label={blogPost.title}
           href={`/article/${articleSlug(blogPost.title)
           }`}
         >
-          <PostTitle>{blogPost.title}</PostTitle>
+          <PostTitle>{blogPost.title}{styleType}</PostTitle>
         </Link>
         <div>
           <PostDetails>
@@ -70,29 +59,37 @@ const FeaturedPost = ({ blogPost }: FeaturedPostImpl): React.ReactElement => {
 };
 
 export default FeaturedPost;
-
-const FeaturedContainer = styled.article`
+interface ComponentProps {
+  styleType?: string
+}
+const FeaturedContainer = styled.div<ComponentProps>`
+  position: relative;
   display: grid;
-  grid-template-columns: 35% 65%;
-  border: 1px #f0f0f0 solid;
-  box-sizing: border-box;
-  padding: 10px;
-  a {
-    color: rgba(0, 0, 0, 0);
-    cursor: pointer;
-    &:hover {
-      color: #6b6b6b;
-    }
-  }
-`;
-const ContentInfo = styled.div`
-  width: 100%;
-  text-align: center;
-`;
-const ImageContainer = styled.div`
-  width: 100%;
-  height: 100%;
+  grid-template-columns: ${props => props.styleType ? "100%" :"30% 65%"};
+  grid-template-rows: ${props => props.styleType ?"50% 50%": null};
+  height: ${props => props.styleType ? "400px": null};
+  padding: ${props => props.styleType ? "30px 10px": "10px"};
+  background-color: brown;
+/* width: ${props => props.styleType ? "400px": null}; */
+/* padding: 10px; */
 
+`;
+const ContentInfo = styled.div<ComponentProps>`
+  width: ${props => props.styleType ? "80%": "100%"};
+  margin: ${props => props.styleType ? "0 0 0 auto": "0 10px"};
+  background-color: white;
+  text-align: center;
+  
+  padding: 10px;
+  /* width: 100%; */
+  /* padding: ${props => props.styleType ? "0": "10px"}; */
+  /* margin: 0 10px; */
+`;
+const ImageContainer = styled.div<ComponentProps>`
+  position: relative; 
+  width: ${props => props.styleType ? "80%": "100%"};
+  margin: ${props => props.styleType ? "0 0 0 auto": "0 10px"};
+  height: 100%;
 `;
 const PostTitle = styled.h1`
   font-size: 22px;
@@ -101,17 +98,9 @@ const PostTitle = styled.h1`
   font-family: Arial, Helvetica, sans-serif;
   cursor: pointer;
 `;
-const FeatImage = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-`;
 const PostDescript = styled.p`
   text-align: left;
-  padding: 2px 10px;
-  color: #858585;
   text-transform: capitalize;
-  max-height: 70px;
   cursor: pointer;
   font-size: 16px;
 `;
@@ -121,5 +110,5 @@ const PostDetails = styled.p`
   letter-spacing: 1.5px;
   text-align: center;
   padding: 2px 10px;
-  color: gray;
+  background-color: aqua;
 `;

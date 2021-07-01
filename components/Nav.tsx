@@ -25,10 +25,12 @@ const NavBar = styled.nav`
   display: grid;
   grid-template-columns: 20% 60% 20%;
   box-sizing: border-box;
+
 `;
 const NavItemList = styled.ul`
-  text-align: center;
   list-style: none;
+  text-align: center;
+  align-self: center;
 `;
 const NavItem = styled.li`
   display: inline;

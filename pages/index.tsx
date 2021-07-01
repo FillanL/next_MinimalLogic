@@ -3,7 +3,7 @@ import Seo from "../components/Seo";
 import FeaturedPost from "../components/featuredPost";
 import styled from "styled-components";
 import BlogPost from "../interfaces";
-import SliderCard from "../components/sliderCard";
+import MainFeaturedCard from "../components/sliderCard";
 import Image from "next/image";
 import Post from "services/post";
 
@@ -12,35 +12,36 @@ interface HomeImpl {
   // allBlogPost: any;
 }
 export default function Home({ allBlogPost }): React.ReactElement {
-  if (!allBlogPost) return <div> loading</div>;
   return (
     <>
-      <Seo title="fill" content="testing out next" />
-      <GrindLayout>
-        <SliderCard key={allBlogPost[0]._id} blogPost={allBlogPost[0]} />
-
-        <SideFeat>
+      <Seo title="Minimal Syntax" content="testing out next" />
+      <HeroSection>
+        <MainFeaturedCard key={allBlogPost[0]._id} blogPost={allBlogPost[0]} />
+        <FeaturedPostContainer>
           {allBlogPost.slice(0, 3).map((post) => (
             <FeaturedPost key={post._id} blogPost={post} />
           ))}
-        </SideFeat>
-      </GrindLayout>
-      <div>small banner</div>
-      <BottomContainer>
+        </FeaturedPostContainer>
+      </HeroSection>
+
+      <BottomSection>
         <RandomArticle>
           {allBlogPost.slice(3, 8).map((post) => (
-            <FeaturedPost key={post._id} blogPost={post} />
+            <FeaturedPost
+              key={post._id}
+              blogPost={post}
+              styleType={"stacked"}
+            />
           ))}
         </RandomArticle>
         <div>section</div>
-      </BottomContainer>
+      </BottomSection>
     </>
   );
 }
 
 export const getStaticProps: GetStaticProps = async () => {
   const allBlogPost = await Post.getPost();
-
   return {
     props: {
       allBlogPost,
@@ -48,39 +49,26 @@ export const getStaticProps: GetStaticProps = async () => {
   };
 };
 
-const GrindLayout = styled.div`
-  width: 100%;
-  min-height: 450px;
-  margin: 0 auto;
+const HeroSection = styled.div`
   display: grid;
-  grid-template-columns: 55% 45%;
+  grid-template-columns: 50% 50%;
+  height: 500px;
+  max-height: 500px;
+  background-color: aquamarine;
+  margin-bottom: 50px;
 `;
-const SideFeat = styled.div`
-  width: 100%;
-  height: 100%;
-  max-height: 100%;
-  overflow: hidden;
+const FeaturedPostContainer = styled.div`
+  position: relative;
   display: grid;
-  grid-template-columns: 100%;
-  grid-template-rows: repeat(auto-fit, minmax(31%, 33.33%));
-  row-gap: 5px;
-  box-sizing: border-box;
+  grid-template-rows: 1fr 1fr 1fr;
+  background-color: #7e8f9e;
 `;
 const RandomArticle = styled.div`
-  width: 100%;
-  height: 100%;
-  max-height: 100%;
-  overflow: hidden;
   display: grid;
-  grid-template-columns: 100%;
-  row-gap: 5px;
-  box-sizing: border-box;
+  grid-template-columns: 50% 50%;
 `;
-const BottomContainer = styled.div`
-  overflow: hidden;
-  display: grid;
-  grid-template-columns: 70% 30%;
-  height: 500px;
-  row-gap: 5px;
-  box-sizing: border-box;
+const BottomSection = styled.div`
+  height: 100%;
+  /* display: grid;
+  grid-template-columns: 50% 50%; */
 `;

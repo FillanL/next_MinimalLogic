@@ -1,6 +1,3 @@
-
-import "./layout.module.css";
-import "../styles/utils.module.css";
 import Nav from "./Nav";
 import Footer from "./Footer";
 import React, { ReactChild } from "react";
@@ -29,7 +26,6 @@ const LayoutContainer = styled.div`
   }
   box-sizing: border-box;
   width: 100%;
-  max-width: 100vw;
   min-height: 100vh;
 `;
 const ChildComponentWrapper = styled.main`

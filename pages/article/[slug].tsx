@@ -7,8 +7,7 @@ import BlogPost from "../../interfaces";
 import Post from "services/post";
 
 export const getStaticPaths: GetStaticPaths = async () => {
-
-  const allBlogPost = await Post.getPost()
+  const allBlogPost = await Post.getPost();
   const paths = await allBlogPost.map((article) => {
     return {
       params: {
@@ -23,8 +22,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   };
 };
 export const getStaticProps: GetStaticProps = async (context) => {
- 
-  const allBlogPost = await Post.getPost()
+  const allBlogPost = await Post.getPost();
   const blogPost = allBlogPost.filter(
     (post) => post.title === articleUnSlug(context.params.slug.toString())
   )[0];
