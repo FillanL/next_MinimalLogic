@@ -2,10 +2,9 @@ import { GetStaticProps, GetStaticPaths } from "next";
 import Seo from "../components/Seo";
 import FeaturedPost from "../components/featuredPost";
 import styled from "styled-components";
-import BlogPost from "../interfaces";
 import MainFeaturedCard from "../components/sliderCard";
-import Image from "next/image";
 import Post from "services/post";
+import Breakpoint from "../styles/responsive";
 
 interface HomeImpl {
   // blogPost: BlogPost;
@@ -65,8 +64,13 @@ const HeroSection = styled.div`
   grid-template-columns: 50% 50%;
   height: 500px;
   max-height: 500px;
-  background-color: white;
   margin-bottom: 50px;
+  margin-top: 50px;
+  ${Breakpoint.max.sm} {
+    grid-template-columns: 100%;
+    height: 100%;
+    max-height: 100%;
+  }
 `;
 const FeaturedPostContainer = styled.div`
   position: relative;
@@ -79,6 +83,11 @@ const RandomArticle = styled.div`
   width: 80%;
   margin: auto;
   border-right: 1px solid rgba(212, 212, 212, 0.729);
+  ${Breakpoint.max.sm} {
+    grid-template-columns: 100%;
+    border: none;
+    width: 100%;
+  }
 `;
 const BottomSection = styled.div<ComponentsProps>`
   height: 100%;
@@ -94,5 +103,11 @@ const BottomSection = styled.div<ComponentsProps>`
     background-color: ${(props) => (props.bgColor ? props.bgColor : null)};
     color: var(--light-primary-color);
     margin-bottom: 10px;
+  }
+  ${Breakpoint.max.sm} {
+    grid-template-columns: 100%;
+    section {
+      width: 100%;
+    }
   }
 `;

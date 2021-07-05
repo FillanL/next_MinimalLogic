@@ -20,7 +20,8 @@ body {
   box-sizing: border-box;
 }
 :root {
-  
+  --basic-box-shadow: 0 3px 11px rgb(125 128 147 / 23%);
+
   --dark-primary-color: rgba(41, 61, 90, 0.99);
   --dark-primary-text-color: rgb(136, 146, 175);
   --dark-secondary-text-color: rgba(199, 211, 215);

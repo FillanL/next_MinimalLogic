@@ -2,6 +2,7 @@ import styled from "styled-components";
 import Image from "next/image";
 import BlogPost from "../interfaces";
 import { articleSlug, readMinutes } from "../utils";
+import Breakpoint from "../styles/responsive";
 import React from "react";
 import Link from "next/link";
 
@@ -46,13 +47,13 @@ const FeaturedPost = ({
         >
           <PostDescript>{blogPost.description}</PostDescript>
         </Link>
-        <Link
+        {/* <Link
           aria-label={blogPost.title}
           href={`/article/${articleSlug(blogPost.title)}
           `}
         >
           read
-        </Link>
+        </Link> */}
       </ContentInfo>
     </FeaturedContainer>
   );
@@ -70,7 +71,13 @@ const FeaturedContainer = styled.div<ComponentProps>`
   grid-template-columns: ${(props) => (props.styleType ? "100%" : "30% 70%")};
   grid-template-rows: ${(props) => (props.styleType ? "50% 50%" : null)};
   height: ${(props) => (props.styleType ? "400px" : null)};
-  padding: ${(props) => (props.styleType ? "30px 15px" : "10px")};
+  margin: ${(props) => (props.styleType ? "30px 15px" : "10px")};
+  box-shadow: var(--basic-box-shadow);
+  border-radius: 5px;
+  ${Breakpoint.max.sm} {
+    height: ${(props) => (props.styleType ? "300px" : "200px")};
+    grid-template-columns: 100%;
+  }
 `;
 const ContentInfo = styled.div<ComponentProps>`
   width: ${(props) => (props.styleType ? "80%" : "100%")};
@@ -78,7 +85,6 @@ const ContentInfo = styled.div<ComponentProps>`
   margin: ${(props) =>
     props.showLeft && props.styleType ? "0 auto 0 0" : null};
   text-align: ${(props) => (props.styleType ? "left" : "center")};
-  background-color: white;
   padding: 10px;
   font-family: Arial, Helvetica, sans-serif;
   width: ${(props) => (props.styleType ? cardwidth : null)};
@@ -91,23 +97,37 @@ const ImageContainer = styled.div<ComponentProps>`
     props.showLeft && props.styleType ? "0 auto 0 0" : null};
   width: ${(props) => (props.styleType ? cardwidth : null)};
   height: 100%;
+  ${Breakpoint.max.sm} {
+    grid-template-columns: 100%;
+    display: ${(props) => (props.styleType ? "block" : "none")};
+  }
 `;
 const PostTitle = styled.h1`
-  font-size: 16px;
+  font-size: 20px;
   font-weight: 600;
   text-transform: capitalize;
   color: #2e2e2e;
   font-family: Arial, Helvetica, sans-serif;
   cursor: pointer;
+  ${Breakpoint.max.sm} {
+    font-size: 16px;
+  }
 `;
 const PostDescript = styled.p`
   text-align: left;
   text-transform: capitalize;
   cursor: pointer;
-  font-size: 14px;
+  font-size: 1rem;
+  ${Breakpoint.max.sm} {
+    grid-template-columns: 100%;
+    font-size: 14px;
+  }
 `;
 const PostDetails = styled.p`
   font-family: Helvetica, sans-serif;
   font-size: 11px;
   letter-spacing: 1.2px;
+  ${Breakpoint.max.sm} {
+    font-size: 9px;
+  }
 `;
