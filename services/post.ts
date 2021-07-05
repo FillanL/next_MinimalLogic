@@ -18,7 +18,7 @@ export default class Post {
     static getPost = async()=>{
       const encodedString: string = process.env.NEXT_PUBLIC_AUTH_TOKEN ? process.env.NEXT_PUBLIC_AUTH_TOKEN : '';
       const encodedToken:string = Buffer.from(encodedString).toString('base64');
-      const responsePost: AxiosResponse<any> = await axios.post(process.env.NEXT_PUBLIC_BASE_URL, this.getPostsQuery, {
+      const responsePost: AxiosResponse<any> = await axios.post(process.env.NEXT_PUBLIC_BASE_URL, Post.getPostsQuery, {
         headers:{
           'Access-Control-Allow-Origin': '*',
           Authorization: 'Basic ' + encodedToken,
