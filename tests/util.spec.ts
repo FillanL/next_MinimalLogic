@@ -51,18 +51,17 @@ describe("test the functionality of mins read", () => {
     const minutes = readMinutes(text);
     expect(minutes).toBe(1);
   });
-
 });
 
-describe("post bucketting",()=>{
-  test("generate 3 random indexs within aarray",()=>{
-    const listOfPost = new Array(5)
-    const randomIndexs = [...generateRandomIndex(listOfPost)]
-    expect(randomIndexs).toHaveLength(3)
-  })
-  test("generate 3 random indexs within aarray not to be null",()=>{
-    const listOfPost = new Array(2)
-    const randomIndexs = [...generateRandomIndex(listOfPost)]
-    expect(randomIndexs).toEqual([1,2,3])
-  })
-})
+describe("post bucketting", () => {
+  test("generate 3 random indexs within aarray", () => {
+    const listOfPost = new Array(5);
+    const randomIndexs = [...generateRandomIndex(listOfPost)];
+    expect(randomIndexs).toHaveLength(3);
+  });
+  test("generate 3 random indexs within aarray not to be null", () => {
+    const listOfPost = new Array(2);
+    const randomIndexs = [...generateRandomIndex(listOfPost)];
+    expect(randomIndexs).toEqual([1, 2, 3]);
+  });
+});
