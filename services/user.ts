@@ -7,7 +7,7 @@ export default class User {
       }`};
 
     static loginUser = async()=>{
-        const responsePost = await axios.post(process.env.NEXT_PUBLIC_BASE_URL, this.loginUserMutation);
+        const responsePost = await axios.post(process.env.NEXT_PUBLIC_BASE_URL, User.loginUserMutation);
         if(responsePost.status === 200 ) return await responsePost.data.data;
         return null
     }
