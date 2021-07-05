@@ -3,16 +3,29 @@ body {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  /* font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
+    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif; */
+  font-family: Calibre, "San Francisco", "SF Pro Text", -apple-system, system-ui,
+    BlinkMacSystemFont, Roboto, "Helvetica Neue", "Segoe UI", Arial, sans-serif;
   line-height: 1.6;
   width: 100vw;
   max-width: 100vw;
   min-height: 100vh;
+  background-color: var(--light-primary-color);
 }
 
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+}
+:root {
+  
+  --dark-primary-color: rgba(41, 61, 90, 0.99);
+  --dark-primary-text-color: rgb(136, 146, 175);
+  --dark-secondary-text-color: rgba(199, 211, 215);
+  
+  --light-primary-color: rgba(248,248,249);
+  --light-secondary-color: rgba(199, 211, 215);
+  --light-primary-text-color: rgba(41, 61, 90, 0.99);
 }

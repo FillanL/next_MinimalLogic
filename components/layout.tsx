@@ -8,7 +8,7 @@ export const siteTitle = "Next.js Sample Website";
 export default function Layout({
   children,
 }: {
-  children: React.ReactChild|React.ReactElement;
+  children: React.ReactChild | React.ReactElement;
 }): React.ReactElement {
   return (
     <LayoutContainer>
@@ -20,10 +20,6 @@ export default function Layout({
 }
 
 const LayoutContainer = styled.div`
-  *{
-    margin:0;
-    padding:0;
-  }
   box-sizing: border-box;
   width: 100%;
   min-height: 100vh;
