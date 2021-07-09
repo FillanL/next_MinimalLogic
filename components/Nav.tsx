@@ -45,11 +45,13 @@ interface componentProps {
   toggle?: boolean;
 }
 const NavBar = styled.nav`
-  width: 90%;
+  width: 100%;
+  padding: 0 5%;
   display: grid;
   grid-template-columns: 20% 60% 20%;
   box-sizing: border-box;
   margin: auto;
+  box-shadow: var(--basic-box-shadow);
   ${Breakpoint.max.sm} {
     grid-template-columns: 25% 75%;
     text-align: center;
