@@ -61,9 +61,9 @@ const NavItem = styled.li`
     padding: 10px;
     text-transform: capitalize;
 
-     &:hover {
-         background-color: rgba(0, 0, 0, 0.075);
-     }
+    &:hover {
+        background-color: rgba(0, 0, 0, 0.075);
+    }
     /*
         &:before {
             content: " ";
