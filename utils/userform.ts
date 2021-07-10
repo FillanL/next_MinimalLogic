@@ -63,7 +63,6 @@ export const getPasswordLength = (password: string) => {
     const length = password.length;
     return length;
 };
-// create a function that checks if a password has atleast one specil character, atleast one number and atleast one upcase letter
 export const isPasswordValid = (password: string): boolean => {
     const hasSpecialCharacter = hasSpecialChar(password);
     const hassNumber = hasNumber(password);
@@ -74,7 +73,7 @@ export const isPasswordValid = (password: string): boolean => {
         hasSpecialCharacter &&
         hassNumber &&
         hasUpperCaseChar &&
-        hasLowerCase &&
+        hasLowerCaseChar &&
         passwordLength >= 8
     )
         return true;
@@ -92,8 +91,6 @@ export const isPasswordValid = (password: string): boolean => {
     // if (!hasUpcase) return false;
     // return true;
 };
-// create test for isPasswordValid
-
 // export const isPasswordValid = (password: string): boolean => {
 //     const specialChar: RegExpMatchArray = password.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/);
 //     const upperCase: RegExpMatchArray = password.match(/[A-Z]/);
