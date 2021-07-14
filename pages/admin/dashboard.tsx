@@ -1,9 +1,16 @@
-import { useState } from "react";
+import { useState, useContext, useEffect } from "react";
 import styled from "styled-components";
 import NavHandler from "components/adminComponents/navHandler";
 import { Tab } from "interfaces/enums";
+import { UserContext } from "context/userContext";
+import { useRouter } from "next/router";
 
-const dashboard = () => {
+const dashboard: React.FC = () => {
+    const { isloggedIn } = useContext(UserContext);
+    const router = useRouter();
+    useEffect(() => {
+        if (!isloggedIn) router.push("/admin/signin");
+    }, [isloggedIn]);
     const initialTab = {
         showing: Tab.HOME,
     };
@@ -11,6 +18,7 @@ const dashboard = () => {
     const { showing } = tab;
     const isActiveTab = (tabName) =>
         showing === tabName ? "active-admin-nav" : null;
+    if (!isloggedIn) return <>Loading...</>;
     return (
         <DashBoardContainer>
             <DashBoardNav>
@@ -62,36 +70,11 @@ const NavItem = styled.li`
     text-transform: capitalize;
 
     &:hover {
-        background-color: rgba(0, 0, 0, 0.075);
-    }
-    /*
-        &:before {
-            content: " ";
-            top: -20px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            box-shadow: 10px 10px 0 var(--light-primary-color);
-            background-color: var(--dark-primary-color);
-            right: 0;
-            position: absolute;
-        }
-        &:after {
-            content: " ";
-            bottom: -20px;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            box-shadow: 10px -10px 0 var(--light-primary-color);
-            background-color: var(--dark-primary-color);
-            right: 0;
-            position: absolute;
-        }
         background-color: var(--light-primary-color);
         border-radius: 20px 0 0 20px;
         cursor: pointer;
         color: black;
-    } */
+    }
 `;
 const UnOrderedList = styled.ul`
     align-self: center;

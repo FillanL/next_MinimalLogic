@@ -6,10 +6,6 @@ import MainFeaturedCard from "../components/sliderCard";
 import Post from "services/post";
 import Breakpoint from "../styles/responsive";
 
-interface HomeImpl {
-    // blogPost: BlogPost;
-    // allBlogPost: any;
-}
 export default function Home({ allBlogPost }): React.ReactElement {
     return (
         <>
@@ -46,7 +42,6 @@ export default function Home({ allBlogPost }): React.ReactElement {
         </>
     );
 }
-// 14213d
 
 export const getStaticProps: GetStaticProps = async () => {
     const allBlogPost = await Post.getPost();

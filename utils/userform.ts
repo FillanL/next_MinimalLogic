@@ -78,23 +78,4 @@ export const isPasswordValid = (password: string): boolean => {
     )
         return true;
     return false;
-    // const specialChar = /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/;
-    // const number = /\d/;
-    // const upcase = /[A-Z]/;
-    // const passwordLength = password.length;
-    // const hasSpecialChar = specialChar.test(password);
-    // const hasNumber = number.test(password);
-    // const hasUpcase = upcase.test(password);
-    // if (passwordLength < 8) return false;
-    // if (!hasSpecialChar) return false;
-    // if (!hasNumber) return false;
-    // if (!hasUpcase) return false;
-    // return true;
 };
-// export const isPasswordValid = (password: string): boolean => {
-//     const specialChar: RegExpMatchArray = password.match(/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/);
-//     const upperCase: RegExpMatchArray = password.match(/[A-Z]/);
-//     const number: RegExpMatchArray = password.match(/\d/);
-//     if (specialChar && upperCase && number) return true;
-//     return false;
-// };

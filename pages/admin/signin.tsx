@@ -1,13 +1,23 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import styled from "styled-components";
 import { isEmailValid, isPasswordValid } from "utils/userform";
+import User from "../../services/user";
 import { FormError } from "interfaces";
 import Seo from "components/Seo";
+import { useRouter } from "next/router";
+import { UserContext } from "context/userContext";
 
 const signin: React.FC = () => {
+    const router = useRouter();
+    const {isloggedIn, setIsloggedin} = useContext(UserContext);
+
+    useEffect(() => {
+        if (isloggedIn){ router.push("/admin/dashboard")}
+    }, [isloggedIn]);
+
     const initUserCredentials = {
-        email: "",
-        password: "",
+        email: "abc@aol.com",
+        password: "zxcASD123!@#",
     };
     const [userCredentials, setUserCredentials] = useState(initUserCredentials);
     const initalFormError: FormError = {
@@ -48,8 +58,22 @@ const signin: React.FC = () => {
             });
             return;
         }
-        
-        return console.log("service called");
+        const response = await User.loginUser(userCredentials);
+
+        if (response.loginUser.token) {
+            setIsloggedin(true);
+            return router.push("/admin/dashboard")
+        };
+        setError({
+            ...error,
+            active: true,
+            message: "Invalid Credentials, Try Again",
+        });
+        setUserCredentials({
+            ...userCredentials,
+            password: initUserCredentials.password,
+        });
+        return
     };
     const isDisabled =
         userCredentials.email.length === 0 ||

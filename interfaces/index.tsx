@@ -8,3 +8,8 @@ export default interface BlogPost {
   author: string;
   readTime: string;
 }
+
+export interface FormError {
+  active: boolean;
+  message: string;
+}

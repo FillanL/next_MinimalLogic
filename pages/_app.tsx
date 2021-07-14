@@ -8,6 +8,7 @@ import "../styles/global.css";
 
 export default function App({ Component, pageProps }: AppProps) {
     const router = useRouter();
+
     useEffect(() => {
         const handleRouteChange = (url) => {
             gtag.pageview(url);
@@ -28,6 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <Layout>
                 <Component {...pageProps} />
             </Layout>
+            {/* </UserContext.Provider> */}
         </>
     );
 }

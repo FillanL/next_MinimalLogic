@@ -20,7 +20,6 @@ const ViewCardContainer = styled.div`
     grid-template-rows: 50% 50%;
     text-align: center;
     padding: 10px;
-    /* border: 1px black solid; */
     height: 100px;
     box-shadow: var(--basic-box-shadow);
     h2 {
