@@ -9,10 +9,12 @@ import { UserContext } from "context/userContext";
 
 const signin: React.FC = () => {
     const router = useRouter();
-    const {isloggedIn, setIsloggedin} = useContext(UserContext);
+    const { isloggedIn, setIsloggedin } = useContext(UserContext);
 
     useEffect(() => {
-        if (isloggedIn){ router.push("/admin/dashboard")}
+        if (isloggedIn) {
+            router.push("/admin/dashboard");
+        }
     }, [isloggedIn]);
 
     const initUserCredentials = {
@@ -62,8 +64,8 @@ const signin: React.FC = () => {
 
         if (response.loginUser.token) {
             setIsloggedin(true);
-            return router.push("/admin/dashboard")
-        };
+            return router.push("/admin/dashboard");
+        }
         setError({
             ...error,
             active: true,
@@ -73,7 +75,7 @@ const signin: React.FC = () => {
             ...userCredentials,
             password: initUserCredentials.password,
         });
-        return
+        return;
     };
     const isDisabled =
         userCredentials.email.length === 0 ||
