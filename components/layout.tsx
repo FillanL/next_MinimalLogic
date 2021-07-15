@@ -20,7 +20,8 @@ export default function Layout({
     useEffect(() => {
         const isUserLoggedIn = async () => {
             const res = await User.isAuthUser();
-            if (res.isUserAuthenicated.token !== null) return setIsloggedin(true);
+            // if(res.isUserAuthenicated){
+            if (res.isUserAuthenicated && res.isUserAuthenicated.token !== null) return setIsloggedin(true);
             return setIsloggedin(false);
         };
         isUserLoggedIn();

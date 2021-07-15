@@ -34,7 +34,7 @@ export default class User {
     };
     static isAuthUserMutation = () => {
         return {
-            query: "query IsUserAuthenicated{ isUserAuthenicated{ token }}",
+            query: "query IsUserAuthenicated{ isUserAuthenicated{ token, message }}",
             operationName: "IsUserAuthenicated",
         };
     };
