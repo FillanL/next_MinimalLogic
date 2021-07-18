@@ -7,7 +7,7 @@ interface UserSigninCredentials {
 export default class User {
     static loginUserMutation = (userSignin: UserSigninCredentials) => {
         return {
-            query: "mutation LoginUser($email: String!, $password: String!){ loginUser(email: $email, password: $password ){token}}",
+            query: "mutation LoginUser($email: String!, $password: String!){ loginUser(email: $email, password: $password ){__typename ...on LoginCredentials{token}}}",
             operationName: "LoginUser",
             variables: {
                 email: userSignin.email,
@@ -56,7 +56,7 @@ export default class User {
                     Accept: "application/json",
                     "Access-Control-Allow-Credentials": true,
                     Authorization: "Basic " + encodedToken,
-                    "credentials": "include",
+                    "Credentials": "include",
                 withCredentials: true,
 
                 },
