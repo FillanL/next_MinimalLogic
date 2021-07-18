@@ -56,6 +56,7 @@ export default class User {
                     Accept: "application/json",
                     "Access-Control-Allow-Credentials": true,
                     Authorization: "Basic " + encodedToken,
+                    "credentials": "include"
                 },
             }
         );
